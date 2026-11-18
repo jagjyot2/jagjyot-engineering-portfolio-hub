@@ -1,43 +1,45 @@
 # Autonomous Resumption Checkpoint (`RESUME-STATE.md`)
 
-> Maintained continuously every 10–15 minutes and prior to session boundaries for zero-loss resumption across 5-hour usage windows.
+> Last Checkpoint: 2026-11-18T08:35:00+05:30 (Timer Iteration 2)
 
-1. **Overall Portfolio Completion Percentage**: `5%` (Workspace & governance initialized; parallel build agents launching)
+1. **Overall Portfolio Completion Percentage**: `38%` (Projects 03 & 07 initial builds verified & committed; Agents 01, 02, 04, 05, 06 & Browser active)
 2. **Current Status of Every Project**:
-   - `01-AEROLENS`: Initialized -> Dispatched to `aerolens-engineer`
-   - `02-SARVISION`: Initialized -> Dispatched to `sarvision-engineer`
-   - `03-SWARMFORGE`: Initialized -> Dispatched to `swarmforge-engineer`
-   - `04-FLIGHTCORE`: Initialized -> Dispatched to `flightcore-engineer`
-   - `05-ROVERSAR`: Initialized -> Dispatched to `roversar-engineer`
-   - `06-CELLGUARD`: Initialized -> Dispatched to `cellguard-engineer`
-   - `07-PORTFOLIO-WEBSITE`: Initialized -> Dispatched to `portfolio-web-engineer`
+   - `01-AEROLENS`: Running final pytest & FastAPI verification (`aerolens-engineer`)
+   - `02-SARVISION`: Building & testing ONNX/OpenCV CV pipeline (`sarvision-engineer`)
+   - `03-SWARMFORGE`: Build & Unit/API Tests Complete (**18/18 passed**, commit `7b65061`)
+   - `04-FLIGHTCORE`: Building firmware, KiCad/Gerbers, BenchTwin pack (`flightcore-engineer`)
+   - `05-ROVERSAR`: Running sub-tasks / verification (`roversar-engineer`)
+   - `06-CELLGUARD`: Building INA226/NTC/SoC firmware, KiCad/Gerbers, dashboard (`cellguard-engineer`)
+   - `07-PORTFOLIO-WEBSITE`: Initial Build Complete (**8/8 passed**, commit `32619b9`; queued for final resync once 01–06 finish)
 3. **What Each Agent Is Currently Working On**:
-   - Agent 00: Finishing Phase 1 setup (timer, sidecar, subagent definitions, central git init) and launching Phase 2 agents.
-   - Agents 01–07: Pending parallel invocation.
+   - Agent 00: Checkpoint management & awaiting Phase 2 agent reports.
+   - Agent 01: Running full pytest suite and verifying FastAPI UI serving.
+   - Agents 02, 04, 05, 06: Completing builds, tests, and local Git commits.
+   - Browser Specialist: Inspecting `https://benchtwin.com/` in browser webview.
    - Agent 08: Standby for Phase 3 QA & Security audit.
-4. **Last Successfully Completed Task**: Created `ENGINEERING-PORTFOLIO` folder tree and core management documents.
+4. **Last Successfully Completed Task**: Project 03 (`7b65061`, 18/18 tests) and Project 07 (`32619b9`, 8/8 tests) verified and committed on `main`.
 5. **Exact Next Task for Each Agent**:
-   - Agent 01: Implement `01-AEROLENS` backend parsers, anomaly engine, exporters, sample data, React+TS UI, and tests.
-   - Agent 02: Implement `02-SARVISION` tiler, ONNX/OpenCV detector, EXIF geo-projection, evaluation metrics, React+TS UI, and tests.
-   - Agent 03: Implement `03-SWARMFORGE` 3D physics, A*/RRT*/APF planners, safety/geofence, WebSocket API, Three.js UI, and tests.
-   - Agent 04: Implement `04-FLIGHTCORE` ESP32 PlatformIO telemetry firmware, KiCad files, BOM, Gerbers, BenchTwin files, and tests.
-   - Agent 05: Implement `05-ROVERSAR` ESP32 diff-drive firmware, nav simulator, web dashboard, STL CAD, KiCad/BOM, BenchTwin files, and tests.
-   - Agent 06: Implement `06-CELLGUARD` ESP32 INA226/NTC/SoC firmware, KiCad Kelvin-shunt PCB/BOM/Safety, web dashboard, BenchTwin files, and tests.
-   - Agent 07: Build `07-PORTFOLIO-WEBSITE` after inspecting completed projects 01–06.
+   - Agents 01, 02, 04, 05, 06: Complete local test verification and Git milestone commits.
+   - Browser Specialist: Report BenchTwin login / component library / build capability.
+   - Agent 07: Re-run `scripts/sync_portfolio_data.py` & `npm run build` after 01–06 complete.
+   - Agent 08: Run independent QA, live server checks, and secret scanning across all 7 repos.
 6. **Current Bugs and Blockers**:
-   - `gh auth status` indicates GitHub CLI is not signed in yet (blocks remote GitHub repo creation/push until user authenticates).
-   - `benchtwin.com` requires Google OAuth sign-in via browser subagent.
+   - `gh auth status` unauthenticated (remote pushes queued until user authenticates `gh`).
+   - BenchTwin browser workflow currently executing.
 7. **Latest Git Commit for Every Repository**:
-   - Central `ENGINEERING-PORTFOLIO`: Pending initial commit.
-   - `01`–`07`: Pending initialization by assigned agents.
+   - Central `ENGINEERING-PORTFOLIO`: `3c5247a` (updating with Checkpoint 2)
+   - `03-SWARMFORGE`: `7b65061`
+   - `07-PORTFOLIO-WEBSITE`: `32619b9`
+   - `01`, `02`, `04`, `05`, `06`: Commits in progress
 8. **Files Currently Being Modified**:
-   - `00-PORTFOLIO-MANAGEMENT/*`
+   - `00-PORTFOLIO-MANAGEMENT/*` (Agent 00) and `01`, `02`, `04`, `05`, `06` project trees.
 9. **Pending Tests**:
-   - All project test suites (`01` through `07`) pending creation and execution.
+   - Suites for `01`, `02`, `04`, `05`, `06`, plus final QA pass (`08`) and resync test (`07`).
 10. **BenchTwin Project and Export Status**:
-    - Browser inspection of `https://benchtwin.com/` pending launch in parallel with hardware agents.
+    - Live browser inspection active (`ad3f999b-2751-47b9-bf87-2b9f70e8e547`). Local BenchTwin packages being staged in `04`, `05`, `06`.
 11. **Remaining Work and Priorities**:
-    1. Launch parallel subagents 01–06 + browser subagent on `benchtwin.com`.
-    2. Build `07-PORTFOLIO-WEBSITE` synced with verified metadata from `01`–`06`.
-    3. Run Agent 08 independent QA, live server smoke checks, and secret scanning.
-    4. Coordinate user login for `gh auth login` and `benchtwin.com` if required, then push all 7 repos and verify remote state.
+    1. Receive completion reports from Agents 01, 02, 04, 05, 06 & Browser.
+    2. Coordinate BenchTwin Google sign-in & 3D workbench build with user if requested.
+    3. Re-sync Project 07 (`07-PORTFOLIO-WEBSITE`) and capture live screenshots of all running dashboards.
+    4. Launch Agent 08 independent QA & security audit.
+    5. Assist user with `gh auth login` and publish all 7 repositories + central hub to GitHub.
