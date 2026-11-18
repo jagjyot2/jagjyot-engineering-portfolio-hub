@@ -60,8 +60,8 @@ foreach ($r in $Repos) {
             Write-Error "Git not initialized in $path"
             exit 1
         }
-        $existingOrigin = git remote get-url origin 2>$null
-        if (-not $existingOrigin) {
+        $remotes = @(git remote)
+        if ($remotes -notcontains "origin") {
             gh repo create "$Owner/$($r.Name)" --public --description "$($r.Desc)" --source=. --remote=origin --push
         } else {
             git push -u origin main
