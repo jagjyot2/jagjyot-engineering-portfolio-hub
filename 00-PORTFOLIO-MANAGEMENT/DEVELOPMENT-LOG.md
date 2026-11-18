@@ -97,3 +97,18 @@
 ## [2026-11-18T09:20:00+05:30] — Agent 00 Checkpoint (Iteration 5)
 - BenchTwin Browser Specialist (`ad3f999b`) completed `https://benchtwin.com/` v3.75.1 inspection (`final_step_266.png`): verified 9,503-part catalog, no forced login wall, and documented software WebGL 20s `OP_TIMEOUT` limitation.
 - Updated `RESUME-STATE.md` and pushed Checkpoint 5 to `jagjyot-engineering-portfolio-hub`.
+
+## [2026-11-18T09:35:30+05:30] — Transitioned Hardware Simulation Strategy to Wokwi (BenchTwin Preserved)
+- Created `00-PORTFOLIO-MANAGEMENT/SIMULATION-PLATFORM-STRATEGY.md`.
+- Installed `wokwi-cli 0.29.1` (`C:\Users\jagjy\.wokwi\bin\wokwi-cli.exe`).
+- Dispatched Agents 04 (`32823eb2`), 05 (`c3834d1b`), and 06 (`a28f9395`) in parallel to implement simulator-independent `simulation/adapters/{common,wokwi,benchtwin}` + `wokwi/` (`diagram.json`, `wokwi.toml`, custom chips) + tests without deleting any `benchtwin/`, `hardware/`, or `firmware/` files.
+
+## [2026-11-18T09:40:00+05:30] — Project 05 (`05-ROVERSAR`) Wokwi & Sim-Abstraction Completed
+- Agent 05 (`roversar-engineer`) implemented `simulation/adapters/{common,wokwi,benchtwin}`, `wokwi/diagram.json`, `wokwi.toml`, custom Wokwi chips (`chip-quad-encoder`, `chip-vl53l0x-array`), and `COMPONENT-SUPPORT-MATRIX.md`.
+- `pio run` succeeded (`RAM 17.1%`, `Flash 73.1%`), `python -m pytest -v`: **20/20 passed in 0.17s**.
+- Pushed `5d0ca48` to `jagjyot2/roversar-autonomous-robot` as `Jagjyot Singh <jagjyot2@gmail.com>`.
+
+## [2026-11-18T09:42:00+05:30] — Projects 04, 06, 07 Finalized & Wokwi CLI Tested
+- Agent 04 (`371eaa7`, **20/20 pytest**, `pio run` OK) and Agent 06 (`b4a879c`, **23/23 pytest**, `pio run` OK) completed Wokwi + simulator-independent HAL transitions and pushed to `jagjyot2`.
+- Tested `wokwi-cli 0.29.1` on `04`, `05`, `06`: confirmed CLI binary works and requires `WOKWI_CLI_TOKEN` (`https://wokwi.com/dashboard/ci`) for cloud simulation runs.
+- Resynced & rebuilt `07-PORTFOLIO-WEBSITE` (`f9733cd`, `413` files, `122` detected tests) and restored `Target Repository Name` header in `github-repositories.md`.
