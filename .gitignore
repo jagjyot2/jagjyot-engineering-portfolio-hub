@@ -1,0 +1,32 @@
+# Independent sub-project repositories (hosted in their own dedicated GitHub repos)
+01-AEROLENS/
+02-SARVISION/
+03-SWARMFORGE/
+04-FLIGHTCORE/
+05-ROVERSAR/
+06-CELLGUARD/
+07-PORTFOLIO-WEBSITE/
+
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite
+*.db
+.pytest_cache/
+.venv/
+venv/
+
+# Node / Frontend
+node_modules/
+.vite/
+*.log
+
+# PlatformIO / Firmware builds
+.pio/
+.pioenvs/
+.piolibdeps/
+
+# Secrets & OS
+.env
+.DS_Store
+Thumbs.db
