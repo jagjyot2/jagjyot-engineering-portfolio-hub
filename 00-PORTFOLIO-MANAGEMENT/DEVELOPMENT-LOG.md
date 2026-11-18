@@ -112,3 +112,11 @@
 - Agent 04 (`371eaa7`, **20/20 pytest**, `pio run` OK) and Agent 06 (`b4a879c`, **23/23 pytest**, `pio run` OK) completed Wokwi + simulator-independent HAL transitions and pushed to `jagjyot2`.
 - Tested `wokwi-cli 0.29.1` on `04`, `05`, `06`: confirmed CLI binary works and requires `WOKWI_CLI_TOKEN` (`https://wokwi.com/dashboard/ci`) for cloud simulation runs.
 - Resynced & rebuilt `07-PORTFOLIO-WEBSITE` (`f9733cd`, `413` files, `122` detected tests) and restored `Target Repository Name` header in `github-repositories.md`.
+
+## [2026-11-18T18:55:00+05:30] — KiCad 10.0.8 Automation Toolkit, Hardware Audits (`04`–`06`) & NIDAR VEGAPilot [PRIVATE]
+- Auto-detected KiCad `10.0.8` (`C:\Program Files\KiCad\10.0`) with `kicad-cli.exe` (`pcbnew` Python scripting available, `223` symbol libs, `155` footprint libs, `105` 3D model dirs) and built `00-PORTFOLIO-MANAGEMENT/kicad-automation/` (`kicad-config.json`, `kicad_toolkit.py`, `detect-kicad.ps1`, `new-project.ps1`, `generate-pcb.ps1`, `run-erc.ps1`, `run-drc.ps1`, `export-gerbers.ps1`, `export-bom.ps1`, `build-all.ps1`).
+- Audited, fixed, and regenerated all three existing hardware PCBs using KiCad `10.0.8` with **0 ERC / 0 DRC / 0 unconnected / 0 parity**, updated Gerbers/DRL/BOM/STEP/GLB:
+  - `04-FLIGHTCORE` (`1ee6709`): **20/20 passed** (`pytest tests`).
+  - `05-ROVERSAR` (`8507294`): **20/20 passed** (`pytest tests`).
+  - `06-CELLGUARD` (`a030ef1`): **23/23 passed** (`pytest tests`).
+- Created Priority-1 project `08-NIDAR-VEGAPILOT-ARIES-V3/` (ignored in public `ENGINEERING-PORTFOLIO/.gitignore`) and pushed initial release `032d036` to strictly private repo `jagjyot2/nidar-vegapilot` (`private: true` verified via `gh api`): KiCad `10.0.8` carrier PCB (`0` ERC / `0` DRC / `0` unconnected / `0` parity), compiled RV32IM C11 ELF/BIN (`47436` text, `52` data, `208512` bss), `7/7` 6-DoF SITL scenarios passed, HIL loopback verified, and `9/9` pytest passed.

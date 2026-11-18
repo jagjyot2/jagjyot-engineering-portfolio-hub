@@ -1,0 +1,52 @@
+{
+    "kicad":  {
+                  "version":  "10.0.8",
+                  "major_minor":  "10.0",
+                  "install_dir":  "C:\\Program Files\\KiCad\\10.0",
+                  "bin_dir":  "C:\\Program Files\\KiCad\\10.0\\bin",
+                  "executables":  {
+                                      "kicad_cli":  "C:\\Program Files\\KiCad\\10.0\\bin\\kicad-cli.exe",
+                                      "kicad":  "C:\\Program Files\\KiCad\\10.0\\bin\\kicad.exe",
+                                      "eeschema":  "C:\\Program Files\\KiCad\\10.0\\bin\\eeschema.exe",
+                                      "pcbnew":  "C:\\Program Files\\KiCad\\10.0\\bin\\pcbnew.exe",
+                                      "gerbview":  "C:\\Program Files\\KiCad\\10.0\\bin\\gerbview.exe",
+                                      "pcb_calculator":  "C:\\Program Files\\KiCad\\10.0\\bin\\pcb_calculator.exe",
+                                      "pl_editor":  "C:\\Program Files\\KiCad\\10.0\\bin\\pl_editor.exe",
+                                      "python":  "C:\\Program Files\\KiCad\\10.0\\bin\\python.exe"
+                                  },
+                  "libraries":  {
+                                    "share_dir":  "C:\\Program Files\\KiCad\\10.0\\share\\kicad",
+                                    "symbols_dir":  "C:\\Program Files\\KiCad\\10.0\\share\\kicad\\symbols",
+                                    "footprints_dir":  "C:\\Program Files\\KiCad\\10.0\\share\\kicad\\footprints",
+                                    "3dmodels_dir":  "C:\\Program Files\\KiCad\\10.0\\share\\kicad\\3dmodels",
+                                    "template_dir":  "C:\\Program Files\\KiCad\\10.0\\share\\kicad\\template",
+                                    "user_config_dir":  "C:\\Users\\jagjy\\AppData\\Roaming\\kicad\\10.0",
+                                    "symbol_lib_count":  223,
+                                    "footprint_lib_count":  155,
+                                    "3dmodel_dir_count":  105
+                                },
+                  "python_scripting":  {
+                                           "available":  true,
+                                           "module":  "pcbnew",
+                                           "pcbnew_version":  "10.0.8"
+                                       }
+              },
+    "design_rules":  {
+                         "fab_baseline":  "JLCPCB_2Layer_1oz",
+                         "min_clearance_mm":  0.2,
+                         "min_track_width_mm":  0.2,
+                         "signal_width_mm":  0.25,
+                         "sensor_power_width_mm":  0.5,
+                         "power_bus_width_mm":  1,
+                         "high_current_width_mm":  3,
+                         "min_via_diameter_mm":  0.6,
+                         "min_via_drill_mm":  0.3,
+                         "std_via_diameter_mm":  0.8,
+                         "std_via_drill_mm":  0.4,
+                         "board_edge_clearance_mm":  0.5,
+                         "silk_text_size_mm":  0.9,
+                         "silk_text_thickness_mm":  0.15,
+                         "schematic_grid_mm":  1.27
+                     },
+    "detected_at":  "2026-11-18T10:10:56+05:30"
+}
