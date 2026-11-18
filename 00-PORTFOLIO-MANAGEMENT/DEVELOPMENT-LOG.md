@@ -84,3 +84,8 @@
   - `https://github.com/jagjyot2/cellguard-battery-monitor` (`088eeaa`, 74/74 files)
   - `https://github.com/jagjyot2/jagjyot-engineering-portfolio` (`b44f9be`, 34/34 files)
 - Verified SHA parity and remote blob counts via `gh api` and `gh repo view`.
+
+## [2026-11-18T08:54:00+05:30] — GitHub Contribution Attribution Corrected (`jagjyot2`)
+- Root cause: initial local repo configs used `jagjyot@users.noreply.github.com` (belonging to a different GitHub account `jagjyot`) instead of `jagjyot2`'s verified email `jagjyot2@gmail.com`.
+- Created local backup branch `backup/pre-author-fix` in all 8 repositories before rewriting history.
+- Updated global and per-repo Git identity to `Jagjyot Singh <jagjyot2@gmail.com>`, rewrote `main` authorship/committer metadata, pushed via `--force-with-lease`, and verified via `gh api` that all 8 repositories report `author.login = "jagjyot2"`, `committer.login = "jagjyot2"`, and `email = "jagjyot2@gmail.com"`.
