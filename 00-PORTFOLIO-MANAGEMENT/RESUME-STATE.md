@@ -1,17 +1,16 @@
 # Portfolio Resume State
 
-- **Last Updated**: `2026-11-18T20:15:00+05:30`
-- **Current Phase**: **Phase 2 — Independent Engineering Verification & Hardware Readiness COMPLETE**
-- **Next Recommended Phase**: **Phase 3 — Hardware Remediation & Physical Bench Integration**
+- **Last Updated**: `2026-11-19T18:03:00+05:30`
+- **Current Phase**: **Phase 3 — Critical Defect Remediation & Independent Re-Verification COMPLETE**
+- **Next Recommended Phase**: **Phase 4 — Physical Hardware Bring-Up, Bench Continuity & Prototype Fab Orders**
 
-## Verified Phase 2 Baseline (Commits Pushed)
-- `ENGINEERING-PORTFOLIO` (`jagjyot2/jagjyot-engineering-portfolio-hub`): updating now with Phase 2 audit governance records
-- `08-NIDAR-VEGAPILOT-ARIES-V3` (`jagjyot2/nidar-vegapilot`, **`PRIVATE`**): `c36b1dd948aa22f64a76d257977f108a56f3380f`
-- `04-FLIGHTCORE` (`jagjyot2/flightcore-telemetry`, public): `795d0b6dd1f4a041572b875c1eeb2d91b4b876cc`
-- `05-ROVERSAR` (`jagjyot2/roversar-autonomous-robot`, public): `451b489f9bf70a2bb38c109d9e1c71ac66b74d91`
-- `06-CELLGUARD` (`jagjyot2/cellguard-battery-monitor`, public): `892ebb6546e07db8b480200fd7023b59c15fda54`
+## Verified Phase 3 Baseline (Commits Pushed)
+- `ENGINEERING-PORTFOLIO` (`jagjyot2/jagjyot-engineering-portfolio-hub`, public): syncing with Phase 3 hub records
+- `08-NIDAR-VEGAPILOT-ARIES-V3` (`jagjyot2/nidar-vegapilot`, **`PRIVATE`**): `199b20da403f8b1669e620eba3c8a2bc61f4e098`
+- `04-FLIGHTCORE` (`jagjyot2/flightcore-telemetry`, public): `83ff8af5444379398f597bc80984b20fa8786e6e`
+- `05-ROVERSAR` (`jagjyot2/roversar-autonomous-robot`, public): `77d604c8c1317ce25b12f45d77181749a7947482`
+- `06-CELLGUARD` (`jagjyot2/cellguard-battery-monitor`, public): `1524ceb1a6e0e63da51610b17c25ea358db58a3b`
 
 ## Summary of Open Work for Next Session
-1. Remediate the fabrication-hold items identified in the four `MANUFACTURING-READINESS.md` reports (`04`, `05`, `06`, and private `08`) before generating final manufacturing releases.
-2. Within the private `08-NIDAR-VEGAPILOT-ARIES-V3` workspace, resolve the critical items tracked in its private `OPEN-ISSUES.md` before commissioning PCB manufacturing or hardware bench tests.
-3. Re-run `kicad-automation` ERC/DRC/Gerber exports and all `pytest` suites after hardware/firmware fixes.
+1. For public hardware boards (`04-FLIGHTCORE`, `05-ROVERSAR`, `06-CELLGUARD`), select `2 oz` outer copper (`0.070 mm`) at fab checkout where `> 25 A` continuous draw applies (`04` and `06`), and align `04` 3D enclosure standoffs to `87.0 × 59.0 mm`.
+2. Within the private `08-NIDAR-VEGAPILOT-ARIES-V3` workspace, complete physical development board caliper/continuity measurements and official vendor SDK header verification (`[PROVISIONAL]` items in private `OPEN-ISSUES.md`) prior to mass carrier fabrication and powered bench testing.

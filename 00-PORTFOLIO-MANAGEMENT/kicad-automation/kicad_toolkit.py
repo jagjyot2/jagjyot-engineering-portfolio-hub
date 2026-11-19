@@ -1455,10 +1455,10 @@ class AutoRouter2Layer:
                     else:
                         fail_pair_count[pair_key] = fail_pair_count.get(pair_key, 0) + 1
 
-            # Second pass for any remaining islands using neckdown width min(w, 0.22)
+            # Second pass for any remaining islands — never neck down wide power nets (w >= 0.45 mm) to 0.22 mm
             rem_edges = [(d, i, j) for d, i, j in edges if find(i) != find(j)]
             if rem_edges:
-                fb_w = min(w, 0.22)
+                fb_w = max(0.45, round(w * 0.70, 2)) if w >= 0.45 else min(w, 0.22)
                 fb_fail: Dict[Tuple[int, int], int] = {}
                 for _, i, j in rem_edges:
                     ri, rj = find(i), find(j)
@@ -1485,9 +1485,28 @@ class AutoRouter2Layer:
 
         # 2. Route GND as a single connected spanning tree while B.Cu pour floods open copper
         if "GND" in by_net:
-            route_net_kruskal("GND", 0.22, by_net["GND"], pre_linked_base=False)
+            route_net_kruskal("GND", 0.30, by_net["GND"], pre_linked_base=False)
 
         return {"failed": failed}
+
+    def add_gnd_stitching_grid(self, step_mm: float = 11.0, edge_margin: float = 4.0) -> int:
+        """Place clearance-checked GND stitching vias across open board regions so B.Cu pour forms 1 contiguous plane."""
+        placed: List[Tuple[float, float]] = []
+        y = edge_margin
+        while y <= self.pcb.height_mm - edge_margin:
+            x = edge_margin
+            while x <= self.pcb.width_mm - edge_margin:
+                gx, gy = self._to_grid(x, y)
+                if 2 <= gx < self.cols - 2 and 2 <= gy < self.rows - 2:
+                    vx, vy = self._to_mm(gx, gy)
+                    if not self._via_blocked(gx, gy, "GND", via_size=0.75):
+                        if all(math.hypot(vx - px, vy - py) >= step_mm * 0.55 for px, py in placed):
+                            self.pcb.add_via("GND", vx, vy, 0.75, 0.35)
+                            self._commit_via(vx, vy, "GND", 0.75)
+                            placed.append((vx, vy))
+                x += step_mm
+            y += step_mm
+        return len(placed)
 
 
 
@@ -1664,6 +1683,116 @@ def fp_kelvin_shunt_4wire(name: str = "R_Shunt_4Wire_CSS4J_4026") -> FootprintDe
         ],
         body_w=11.5,
         body_h=7.0,
+    )
+
+
+def fp_tssop28_sc16is752(name: str = "TSSOP-28_4.4x9.7mm_P0.65mm") -> FootprintDef:
+    """JEDEC MO-153 Var AE TSSOP-28 (NXP SC16IS752IPW): 0.65 mm pitch, 0.25 mm pad-to-pad clearance."""
+    return fp_soic_dual(
+        name=name,
+        total_pins=28,
+        pitch=0.65,
+        row_span=5.725,
+        pad_w=1.475,
+        pad_h=0.40,
+        model_rel="Package_SO.3dshapes/TSSOP-28_4.4x9.7mm_P0.65mm.step",
+    )
+
+
+def fp_bmp390_lga10(name: str = "Bosch_LGA-10_2x2mm_P0.5mm") -> FootprintDef:
+    """Bosch BMP390 2.0x2.0mm 10-pin border LGA (0.50 mm pitch, 0.22 mm min copper gap on sides & corners)."""
+    return FootprintDef(
+        name=name,
+        attr="smd",
+        pads=[
+            PadDef("1", "smd", "roundrect", -0.78, -0.25, 0.38, 0.28),
+            PadDef("2", "smd", "roundrect", -0.78, +0.25, 0.38, 0.28),
+            PadDef("3", "smd", "roundrect", -0.50, +0.80, 0.28, 0.38),
+            PadDef("4", "smd", "roundrect", 0.00, +0.80, 0.28, 0.38),
+            PadDef("5", "smd", "roundrect", +0.50, +0.80, 0.28, 0.38),
+            PadDef("6", "smd", "roundrect", +0.78, +0.25, 0.38, 0.28),
+            PadDef("7", "smd", "roundrect", +0.78, -0.25, 0.38, 0.28),
+            PadDef("8", "smd", "roundrect", +0.50, -0.80, 0.28, 0.38),
+            PadDef("9", "smd", "roundrect", 0.00, -0.80, 0.28, 0.38),
+            PadDef("10", "smd", "roundrect", -0.50, -0.80, 0.28, 0.38),
+        ],
+        body_w=2.4,
+        body_h=2.4,
+        model_rel_path="Package_LGA.3dshapes/ST_HLGA-10_2x2mm_P0.5mm_LayoutBorder3x2y.step",
+    )
+
+
+def fp_crystal_5032_2pin(name: str = "Crystal_SMD_5032-2Pin_5.0x3.2mm") -> FootprintDef:
+    """Standard 5.0x3.2mm 2-pad SMD crystal (16 MHz MCP2515 / 14.7456 MHz SC16IS752)."""
+    return FootprintDef(
+        name=name,
+        attr="smd",
+        pads=[
+            PadDef("1", "smd", "roundrect", -1.85, 0.0, 2.0, 2.4),
+            PadDef("2", "smd", "roundrect", +1.85, 0.0, 2.0, 2.4),
+        ],
+        body_w=5.8,
+        body_h=3.6,
+        model_rel_path="Crystal.3dshapes/Crystal_SMD_5032-2Pin_5.0x3.2mm.step",
+    )
+
+
+def fp_xt30_vertical(name: str = "AMASS_XT30UPB-M_1x02_P5.0mm_Vertical") -> FootprintDef:
+    """AMASS XT30UPB-M/F vertical high-current 5.0 mm pitch through-hole connector (1.8 mm drill, 3.2 mm pad)."""
+    return FootprintDef(
+        name=name,
+        attr="through_hole",
+        pads=[
+            PadDef("1", "thru_hole", "rect", -2.50, 0.0, 3.2, 3.2, 1.8, ("*.Cu", "*.Mask")),
+            PadDef("2", "thru_hole", "circle", +2.50, 0.0, 3.2, 3.2, 1.8, ("*.Cu", "*.Mask")),
+        ],
+        body_w=10.4,
+        body_h=5.4,
+        model_rel_path="Connector_AMASS.3dshapes/AMASS_XT30UPB-M_1x02_P5.0mm_Vertical.step",
+    )
+
+
+def fp_jst_xh_1xN(
+    name: str, count: int, horizontal: bool = False, model_rel: Optional[str] = None
+) -> FootprintDef:
+    """JST XH Series 2.50 mm true-metric pitch shrouded wire-to-board vertical header."""
+    default_model = f"Connector_JST.3dshapes/JST_XH_B{count}B-XH-A_1x{count:02d}_P2.50mm_Vertical.step"
+    return fp_pin_header_1xN(
+        name=name,
+        count=count,
+        pitch=2.50,
+        pad_d=1.75,
+        drill=0.95,
+        model_rel=model_rel or default_model,
+        horizontal=horizontal,
+    )
+
+
+def fp_ato_blade_fuse(name: str = "Fuseholder_Blade_ATO_Littelfuse_Pudenz_2_Pin") -> FootprintDef:
+    """Standard ATO/ATC blade fuse holder (9.20 mm pitch, 2.0 mm drill, 3.5 mm pad)."""
+    return FootprintDef(
+        name=name,
+        attr="through_hole",
+        pads=[
+            PadDef("1", "thru_hole", "rect", -4.60, 0.0, 3.5, 3.5, 2.0, ("*.Cu", "*.Mask")),
+            PadDef("2", "thru_hole", "circle", +4.60, 0.0, 3.5, 3.5, 2.0, ("*.Cu", "*.Mask")),
+        ],
+        body_w=20.0,
+        body_h=6.2,
+    )
+
+
+def fp_power_terminal_508_2p(name: str = "TerminalBlock_bornier-2_P5.08mm") -> FootprintDef:
+    """2-pin 5.08 mm pitch high-current screw terminal / power switch connector (1.5 mm drill, 3.2 mm pad)."""
+    return FootprintDef(
+        name=name,
+        attr="through_hole",
+        pads=[
+            PadDef("1", "thru_hole", "rect", -2.54, 0.0, 3.2, 3.2, 1.5, ("*.Cu", "*.Mask")),
+            PadDef("2", "thru_hole", "circle", +2.54, 0.0, 3.2, 3.2, 1.5, ("*.Cu", "*.Mask")),
+        ],
+        body_w=10.8,
+        body_h=7.8,
     )
 
 
